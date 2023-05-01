@@ -15,6 +15,12 @@
   
   <ThisDiscount />
 
+
+  <button class="btn" @click="priceDownSort">가격 낮은순 정렬</button>
+  <button class="btn" @click="priceUpSort">가격 높은순 정렬</button>
+  <button class="btn" @click="nameSort">상품명 가나다순 정렬</button>
+  <button class="btn" @click="sortBack">되돌리기</button>
+
   <!-- <div v-for="(a,i) in products" :key="i">
     <h4>{{ a }}</h4>
     <p>50만원</p>
@@ -48,6 +54,7 @@ export default {
   data() { // 모든 데이터 보관
     return {
       oneroom : data,
+      oneroomoriginal : [...data], // array/object 데이터의 각각 별개의 사본을 만들려면
       modal : false,
       menus : ['Home', "Shop", "About"],
       products : ['역삼동 원룸', '천호동 원룸', '마포구 원룸'],
@@ -60,6 +67,24 @@ export default {
       this.신고수 += 1;
       // 함수 안에서 데이터 쓸 땐 this.데이터명
     },
+    priceDownSort() {
+      this.oneroom.sort(function(a, b){
+        return a.price - b.price
+      })
+    },
+    priceUpSort() {
+      this.oneroom.sort(function(a,b) {
+        return b.price - a.price
+      })
+    },
+    nameSort(){
+      this.oneroom.sort(function(a,b) {
+        return a.title - b.title
+      })
+    },
+    sortBack() {
+      this.oneroom = [...this.oneroomoriginal]
+    }
   },
   components: {
     ThisDiscount : ThisDiscount, // Discount,
@@ -147,5 +172,7 @@ div {
   border-radius: 5px;
   background: darkslateblue;
   color: white;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 </style>
