@@ -1,6 +1,13 @@
 <template>
+
+  <transition name="fade">
+    <ThisModal @closeModal="modal = false" :oneroom="oneroom" :누른거="누른거" :modal="modal"/>
+  </transition>
    
-  <ThisModal @closeModal="modal = false" :oneroom="oneroom" :누른거="누른거" :modal="modal"/>
+  <!-- <div class="start" :class="{ end : modal }" >
+    <ThisModal @closeModal="modal = false" :oneroom="oneroom" :누른거="누른거" :modal="modal"/>
+  </div> -->
+
 
   <div class="menu">
     <a v-for="(a,i) in menus" :key="i">{{ a }}</a> <!-- 반복문 쓸 때 :key 안쓰면 에러 -->
@@ -70,6 +77,38 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+/* .start {
+  opacity: 0;
+  transition: all 1s;
+}
+.end {
+  opacity: 1;
+} */
+
+
+/* 들어갈 때 */
+.fade-enter-from { /* 시작 시 스타일 */
+  transform: translateY(-1000px);
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-enter-to { /* 끝날 시 스타일 */
+  transform: translateY(0px);
+}
+
+/* 나갈 때 */
+.fade-leave-from { /* 시작 시 스타일 */
+  opacity: 1;
+}
+.fade-leave-active {
+  transition: all 1s;
+}
+.fade-leave-to { /* 끝날 시 스타일 */
+  opacity: 0;
+}
+
+
 .menu {
   background: darkslateblue;
   padding: 15px;
