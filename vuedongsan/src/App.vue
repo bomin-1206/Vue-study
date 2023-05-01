@@ -1,16 +1,12 @@
 <template>
-
-  <div class="black-bg" v-if="modal == true">
-   <div class="white-bg">
-    <h4>상세페이지임</h4>
-    <p>상세페이지 내용임</p>
-    <button @click="modal = fasle" class="btn">닫기</button>
-   </div>
-  </div>
+   
+  <ThisModal />
 
   <div class="menu">
     <a v-for="(a,i) in menus" :key="i">{{ a }}</a> <!-- 반복문 쓸 때 :key 안쓰면 에러 -->
   </div>
+  
+  <ThisDiscount />
 
   <!-- <div v-for="(a,i) in products" :key="i">
     <h4>{{ a }}</h4>
@@ -19,7 +15,7 @@
 
   <div v-for="(a, i) in oneroom" :key="i">
     <img :src="a.image" class="room-img">
-    <h4 @click="modal = true">{{ a.title }}</h4>
+    <h4 @click="modal = true; 누른거=i">{{ a.title }}</h4>
     <p>{{ a.price }}원</p>
     <button v-on:click="신고수[i] += 1" class="btn">허위매물신고</button> <span>신고 수 : {{ 신고수[i] }}</span>
     <!-- v-on:click을 @click으로 쓸 수 있다. -->
@@ -42,6 +38,8 @@
 <script>
 
 import data from './assets/data.js'
+import ThisDiscount from './ThisDiscount.vue';
+import ThisModal from './ThisModal.vue';
 
 export default {
   name: 'App',
@@ -52,6 +50,7 @@ export default {
       menus : ['Home', "Shop", "About"],
       products : ['역삼동 원룸', '천호동 원룸', '마포구 원룸'],
       신고수 : [0, 0, 0, 0, 0, 0],
+      누른거 : 0,
     }
   },
   methods : {
@@ -61,6 +60,8 @@ export default {
     },
   },
   components: {
+    ThisDiscount : ThisDiscount, // Discount,
+    ThisModal,
   }
 }
 </script>
