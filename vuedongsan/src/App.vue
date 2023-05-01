@@ -1,6 +1,6 @@
 <template>
    
-  <ThisModal />
+  <ThisModal @closeModal="modal = false" :oneroom="oneroom" :누른거="누른거" :modal="modal"/>
 
   <div class="menu">
     <a v-for="(a,i) in menus" :key="i">{{ a }}</a> <!-- 반복문 쓸 때 :key 안쓰면 에러 -->
@@ -13,13 +13,7 @@
     <p>50만원</p>
   </div> -->
 
-  <div v-for="(a, i) in oneroom" :key="i">
-    <img :src="a.image" class="room-img">
-    <h4 @click="modal = true; 누른거=i">{{ a.title }}</h4>
-    <p>{{ a.price }}원</p>
-    <button v-on:click="신고수[i] += 1" class="btn">허위매물신고</button> <span>신고 수 : {{ 신고수[i] }}</span>
-    <!-- v-on:click을 @click으로 쓸 수 있다. -->
-  </div>
+  <ThisCard @openModal="modal = true; 누른거 = $event" v-for="(a, i) in oneroom" :key="i" :신고수="신고수" :a="a" :i="i" />
   <!-- <div>
     <img :src="oneroom[1].image" class="room-img">
     <h4>{{ oneroom[1].title }}</h4>
@@ -40,6 +34,7 @@
 import data from './assets/data.js'
 import ThisDiscount from './ThisDiscount.vue';
 import ThisModal from './ThisModal.vue';
+import ThisCard from './ThisCard.vue';
 
 export default {
   name: 'App',
@@ -62,6 +57,7 @@ export default {
   components: {
     ThisDiscount : ThisDiscount, // Discount,
     ThisModal,
+    ThisCard,
   }
 }
 </script>
