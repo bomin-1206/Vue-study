@@ -6,6 +6,7 @@
     <p> {{ oneroom[누른거].content }}</p>
     <!-- <input @input="month = $event.target.value"> -->
     <input v-model="month">
+    <!-- <input type="range" min="1" max="12"> -->
     <!-- <textarea v-model="month"></textarea>
     <select v-model="month">
       <option>213</option>
@@ -24,6 +25,16 @@ export default {
     data(){
       return {
         month : 1,
+      }
+    },
+    watch : { // 데이터 감시하려면
+    // 데이터 이름 : { 감시할 데이터(){} }
+      month(a) {
+        // month라는 데이터가 변할 때마다 여기있는 코드 실행됨
+        if(isNaN(a) == true) {
+          alert('숫자만 입력하세요.');
+          this.month = 1;
+        }
       }
     },
     // props : { 데이터이름 : 자료형이름 }
