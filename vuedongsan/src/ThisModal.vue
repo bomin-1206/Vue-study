@@ -13,7 +13,7 @@
       <option>213134</option>
       <option>21323456</option>
     </select> -->
-    <p>{{month}}개월 선택함 {{ oneroom[누른거].price * month }}원</p>
+    <p>{{month}}개월 선택함 : {{ oneroom[누른거].price * month }}원</p>
     <button @click="$emit('closeModal')" class="btn">닫기</button>
    </div>
   </div>
@@ -25,6 +25,12 @@ export default {
     data(){
       return {
         month : 1,
+      }
+    },
+    beforeUpdata(){
+      if (this.month == 2) {
+        alert('3개월 이상부터 가능합니다.');
+        this.month = 3;
       }
     },
     watch : { // 데이터 감시하려면

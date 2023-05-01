@@ -13,7 +13,7 @@
     <a v-for="(a,i) in menus" :key="i">{{ a }}</a> <!-- 반복문 쓸 때 :key 안쓰면 에러 -->
   </div>
   
-  <ThisDiscount />
+  <ThisDiscount v-if="showDiscount == true" />
 
 
   <button class="btn" @click="priceDownSort">가격 낮은순 정렬</button>
@@ -53,6 +53,7 @@ export default {
   name: 'App',
   data() { // 모든 데이터 보관
     return {
+      showDiscount : true,
       oneroom : data,
       oneroomoriginal : [...data], // array/object 데이터의 각각 별개의 사본을 만들려면
       modal : false,
@@ -86,12 +87,20 @@ export default {
       this.oneroom = [...this.oneroomoriginal]
     }
   },
+
+  // mounted(){
+  //   setTimeout(()=>{
+  //     this.showDiscount = false;
+  //   }, 2000);
+  // },
+
   components: {
     ThisDiscount : ThisDiscount, // Discount,
     ThisModal,
     ThisCard,
   }
 }
+
 </script>
 
 <style>
@@ -172,7 +181,6 @@ div {
   border-radius: 5px;
   background: darkslateblue;
   color: white;
-  margin-right: 5px;
-  margin-left: 5px;
+  margin: 5px;
 }
 </style>
