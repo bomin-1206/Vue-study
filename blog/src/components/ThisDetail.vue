@@ -4,6 +4,7 @@
     <h5>{{ 블로그글[$route.params.id].title }}</h5>
     <p>{{ 블로그글[$route.params.id].content }}</p>
     <p>{{ 블로그글[$route.params.id].date }}</p>
+    <router-view></router-view>
   </div>
 </template>
 
