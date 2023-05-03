@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <Post :data="data[0]" />
-    <Post :data="data[1]" />
-    <Post :data="data[2]" />
+  <div v-for="(a,i) in 게시물" :key="i">
+    <Post :게시물="게시물[i]" />
   </div>
 </template>
 
@@ -15,7 +13,7 @@ export default {
         Post,
     },
     props : {
-        data : Object,
+        게시물 : Array,
     }
 }
 </script>

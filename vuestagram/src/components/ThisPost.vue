@@ -1,14 +1,14 @@
 <template>
     <div class="post">
         <div class="post-header">
-        <div class="profile"></div>
-        <span class="profile-name">{{ data.name }}</span>
+        <div class="profile" :style="{ backgroundImage : `url(${게시물.userImage})` }"></div>
+        <span class="profile-name">{{ 게시물.name }}</span>
         </div>
-        <div class="post-body"></div>
+        <div class="post-body" :style="{ backgroundImage : `url(${게시물.postImage})` }"></div>
         <div class="post-content">
-        <p>{{ data.likes }}</p>
-        <p><strong>{{ data.filter }}</strong>{{ data.content }}</p>
-        <p class="date">{{ data.date }}</p>
+        <p>{{ 게시물.likes }} Likes</p>
+        <p><strong>{{ 게시물.filter }}</strong> {{ 게시물.content }}</p>
+        <p class="date">{{ 게시물.date }}</p>
         </div>
     </div> 
 </template>
@@ -17,7 +17,7 @@
 export default {
     name: 'ThisPost',
     props : {
-        data : Array,
+        게시물 : Array,
     }
 }
 </script>
@@ -27,7 +27,6 @@ export default {
   width: 100%;
 }
 .profile {
-  background-image: url("https://placeimg.com/100/100/arch");
   width: 30px;
   height: 30px;
   background-size: 100%;
@@ -46,7 +45,6 @@ export default {
   padding: 10px;
 }
 .post-body {
-  background-image: url("https://placeimg.com/640/480/animals");
   height: 450px;
   background-position: center;
   background-size: cover;
