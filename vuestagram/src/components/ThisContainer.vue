@@ -1,7 +1,5 @@
 <template>
-  <div v-for="(a,i) in 게시물" :key="i">
-    <Post :게시물="게시물[i]" />
-  </div>
+  <Post :게시물="게시물[i]" v-for="(a,i) in 게시물" :key="i"/>
 </template>
 
 <script>

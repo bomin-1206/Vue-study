@@ -10,6 +10,7 @@
   </div>
 
   <Container :게시물="게시물" />
+  <button @click="more">더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -22,16 +23,30 @@
 <script>
 import Container from './components/ThisContainer.vue';
 import postdata from './postdata.js';
+import axios from 'axios';
 
 export default {
   name: 'App',
   data() {
     return {
       게시물 : postdata,
+      더보기 : 0,
     }
   },
   components: {
     Container,
+  },
+  methods: {
+    more() {
+      // post 요청은 axios.post()
+      // 요청 했을 때 실패시 실행할 코드는 .fetch()
+
+      axios.get(`https://codingapple1.github.io/vue/more${this.더보기}.json`)
+      .then((result)=>{
+        this.게시물.push(result.data);
+        this.더보기 += 1
+      })
+    }
   },
 }
 </script>
