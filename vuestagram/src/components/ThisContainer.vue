@@ -1,34 +1,46 @@
 <template>
-  <Post :게시물="게시물[i]" v-for="(a,i) in 게시물" :key="i"/>
-
-  <div class="upload-image"></div>
-
-  <div class="filters">
-    <div class="filter-1"></div>
-    <div class="filter-1"></div>
-    <div class="filter-1"></div>
-    <div class="filter-1"></div>
-    <div class="filter-1"></div>
+  <div v-if="step == 0">
+    <Post  :게시물="게시물[i]" v-for="(a,i) in 게시물" :key="i"/>
   </div>
 
-  <div class="upload-image"></div>
-  <div class="write">
-    <textarea class="write-box">write!</textarea>
+  <div v-if="step == 1">
+    <div class="upload-image" :style="`background-image : url(${이미지})`"></div>
+    <div class="filters">
+      <FilterBox :이미지="이미지" :필터들="필터들[i]" v-for="(a,i) in 필터들" :key="i"></FilterBox>
+    </div>
   </div>
-  
+
+  <div v-if="step == 2">
+    <div class="upload-image" :style="`background-image : url(${이미지})`"></div>
+    <div class="write">
+        <textarea @input="$emit('write', $event.target.value)" class="write-box" placeholder="글을 입력해주세요"></textarea>
+    </div>
+  </div>
+
 </template>
 
 <script>
-import Post from './ThisPost.vue'
+import Post from './ThisPost.vue';
+import FilterBox from './FilterBox.vue';
 
 export default {
     name: 'ThisContainer',
+    data() {
+      return {
+        필터들 : [ "aden", "_1977", "brannan", "brooklyn", "clarendon",
+        "earlybird", "gingham", "hudson", "inkwell", "kelvin", "lark", "lofi",
+        "maven", "mayfair", "moon", "nashville", "perpetua", "reyes", "rise",
+        "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
+      }
+    },
     components : {
         Post,
+        FilterBox,
     },
     props : {
         게시물 : Array,
         step : Number,
+        이미지 : String,
     }
 }
 </script>

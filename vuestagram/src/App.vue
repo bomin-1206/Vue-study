@@ -1,20 +1,21 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li>Cancel</li>
+      <li @click="step-=1">Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step == 1" @click="step+=1">Next</li>
+      <li v-if="step == 2" @click="publish">발행</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :게시물="게시물" />
+  <Container @write="작성한글 = $event" :게시물="게시물" :step="step" :이미지="이미지" />
   <button @click="more">더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input @change="upload" type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
  </div>
@@ -40,22 +41,44 @@ export default {
       게시물 : postdata,
       더보기 : 0,
       step: 0,
+      이미지 : '',
+      작성한글 : '',
     }
   },
   components: {
     Container,
   },
   methods: {
+    publish() {
+      var 내게시물 = {
+        name: "min",
+        userImage: "https://placeimg.com/100/100/arch",
+        postImage: this.이미지,
+        likes: 295,
+        date: "May 15",
+        liked: false,
+        content: this.작성한글,
+        filter: "perpetua"
+      };
+      this.게시물.unshift(내게시물); // 왼쪽의 array에 자료집어넣어줌
+      this.step = 0;
+    },
     more() {
       // post 요청은 axios.post()
       // 요청 했을 때 실패시 실행할 코드는 .fetch()
-
       axios.get(`https://codingapple1.github.io/vue/more${this.더보기}.json`)
       .then((result)=>{
         this.게시물.push(result.data);
-        this.더보기 += 1
+        this.더보기 += 1;
       })
-    }
+    },
+    upload(e){
+      let 파일 = e.target.files;
+      console.log(파일[0]);
+      this.이미지 = URL.createObjectURL(파일[0]);
+      console.log(this.이미지);
+      this.step += 1;
+    },
   },
 }
 </script>
@@ -71,7 +94,7 @@ export default {
   position: relative;
   border-right: 1px solid #eee;
   border-left: 1px solid #eee;
-}
+}  
 body {
   margin: 0;
 }

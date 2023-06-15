@@ -9,6 +9,7 @@
         <p>{{ 게시물.likes }} Likes</p>
         <p><strong>{{ 게시물.filter }}</strong> {{ 게시물.content }}</p>
         <p class="date">{{ 게시물.date }}</p>
+        <p class="data">{{게시물.likes}}</p>
         </div>
     </div> 
 </template>
