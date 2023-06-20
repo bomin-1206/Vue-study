@@ -10,8 +10,18 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container @write="작성한글 = $event" :게시물="게시물" :step="step" :이미지="이미지" />
-  <button @click="more">더보기</button>
+  <!-- <h4>안녕 {{ $store.state.name }}</h4>
+  <button @click="$store.commit('이름변경')">버튼</button>         
+  <h4>나이 {{ $store.state.age }}</h4>
+  <button @click="$store.commit('나이변경', 10)">버튼</button> -->
+
+  <!-- <p>{{ $store.state.more }}</p>
+  <button @click="$store.dispatch('getData')">더보기버튼</button> -->
+
+  <p>{{name}} {{age}} {{likes}} {{내이름}}</p>
+
+  <Container @write="작성한글 = $event" :게시물="게시물" :step="step" :이미지="이미지" :필터="필터" />
+  <!-- <button @click="more">더보기</button> -->
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -30,9 +40,10 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 import Container from './components/ThisContainer.vue';
 import postdata from './postdata.js';
-import axios from 'axios';
+// import axios from 'axios';
 
 export default {
   name: 'App',
@@ -40,15 +51,39 @@ export default {
     return {
       게시물 : postdata,
       더보기 : 0,
-      step: 0,
+      step: 3,
       이미지 : '',
       작성한글 : '',
+      필터 : '',
+      count : 0,
     }
+  },
+  mounted() {
+    this.emitter.on('작명', (a)=>{
+      this.필터 = a;
+    });
   },
   components: {
     Container,
   },
+  computed : { // computed 함수는 return이 꼭 있어야함
+    name(){
+      return this.$store.state.name
+    },
+    ...mapState([ 'name', 'age', 'likes' ]),
+    ...mapState({ 내이름 : 'name' })
+    // now2() { // computed함수는 사용해도 실행되지 않습니다
+    // // 처음 실행하고 값을 간직함
+    // // now2()가 아닌 now2로 표시
+    //   return new Date()
+    // },
+  },
   methods: {
+    ...mapMutations([ 'setMore', '좋아요변경' ]),
+    // now() { // methods 함수는 사용할 때마다 실행됨
+    // // now()로 표시
+    //   return new Date()
+    // },
     publish() {
       var 내게시물 = {
         name: "min",
@@ -58,20 +93,20 @@ export default {
         date: "May 15",
         liked: false,
         content: this.작성한글,
-        filter: "perpetua"
+        filter: this.필터,
       };
       this.게시물.unshift(내게시물); // 왼쪽의 array에 자료집어넣어줌
       this.step = 0;
     },
-    more() {
-      // post 요청은 axios.post()
-      // 요청 했을 때 실패시 실행할 코드는 .fetch()
-      axios.get(`https://codingapple1.github.io/vue/more${this.더보기}.json`)
-      .then((result)=>{
-        this.게시물.push(result.data);
-        this.더보기 += 1;
-      })
-    },
+    // more() {
+    //   // post 요청은 axios.post()
+    //   // 요청 했을 때 실패시 실행할 코드는 .fetch()
+    //   axios.get(`https://codingapple1.github.io/vue/more${this.더보기}.json`)
+    //   .then((result)=>{
+    //     this.게시물.push(result.data);
+    //     this.더보기 += 1;
+    //   })
+    // },
     upload(e){
       let 파일 = e.target.files;
       console.log(파일[0]);
